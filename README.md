@@ -4,6 +4,23 @@ Implémentation minimaliste d'une API de conversion Geonym <-> lat/lon
 
 L'API repose sur le module python Falcon, et un module geonym.py
 
+## À propos des Géonym
+
+Un geonym est une traduction sous forme de chaine de caractère d'une position géographique.
+Plus cette chaine est longue, plus le geonym correspond à une petite zone géographique.
+
+P = zone de 234km x 234km
+PP = zone de 47km x 47km inclue dans celle de 'P'
+PP7 = zone de 9 x 9km inslue dans celle de 'PP'
+...
+PP7K-RF4V = zone de 3m x 3m correspondant à l'entrée de la Tour Mirabeau à Paris
+
+Voir: http://www.geonym.fr/visu/#19/48.84687/2.27924
+
+L'algorithme utilisé est identique à OpenPostcode (licence LGPL), avec un alphabet différent destiné à minimiser les ambiguités (8/B, 0/D). Voir: http://www.openpostcode.org/
+
+Les caractères utilisés sont limités aux chiffres de 0 à 9 et aux consonnes non ambigües (0/D/O, 1/I, 6/G, 8/B).
+
 
 ## Installation
 
@@ -20,14 +37,19 @@ L'idéal est de fonctionner dans un virtualenv python3.
 
 `gunicorn geonymapi:app -b 0.0.0.0:1405 -w 4`
 
+ou pour fonctionner en daemon avec rechargement automatique lorsque le code est modifié:
+
+`gunicorn geonymapi:app -b 0.0.0.0:1405 -w 4 --reload -D`
+
+
 ## Usage
 
 Conversion geonym > lat/lon:
-- http://localhost:1405/PP7K-RF4R
-- http://localhost:1405/?geonym=PP7K-RF4R
+- http://api.geonym.fr/PP7K-RF4R
+- http://api.geonym.fr/?geonym=PP7K-RF4R
 
 Conversion lat/lon > geonym:
-- http://localhost:1405/?lat=48.8&lon=2.35
+- http://api.geonym.fr/?lat=48.8&lon=2.35
 
 Réponse:
 ```{
@@ -61,5 +83,3 @@ Réponse:
 - north/west/south/east sont les limites du geonym
 - lat/lon correspond au centre de la bbox du geonym
 - params contient les paramètres de la grille (alphabet et limites géographiques)
-
-L'algorithme utilisé est identique à OpenPostcode (licence LGPL), avec un alphabet différent destiné à minimiser les ambiguités (8/B, 0/D). Voir: http://www.openpostcode.org/
