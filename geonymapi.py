@@ -29,8 +29,11 @@ class GeonymResource(object):
                 "params":geonym.getParams(),
                 "geometry":{"type":"Point","coordinates":[data['lon'],data['lat']]}}
             resp.body = json.dumps(geojson, sort_keys=True)
+            resp.set_header('Content-type','application/json')
         else:
             resp.status = falcon.HTTP_400
+            resp.set_header('Content-type','text/html')
+            resp.body = "README dispo sur <a href='https://github.com/geonym/geonymapi'>https://github.com/geonym/geonymapi</a>"
 
     def on_get(self, req, resp, query=None):
         self.getGeonym(req, resp, query);
