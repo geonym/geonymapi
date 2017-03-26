@@ -9,7 +9,7 @@ L'API repose sur le module python Falcon, et un module geonym.py (utilisable hor
 
 Communiquer la position d'un lieu se fait en général par une adresse, mais en l'absence d'adresse on ne peut que recourir aux coordonnées GPS peut faciles à mémoriser et trop variables dans leurs formats (dégrés, dégrés+minutes, dégrés+minutes+secondes, etc).
 
-Afin de combler ces deux manques, une position géographique peut être traduite en une série de caractères, mémorisable et facile à communiquer.
+Afin de combler ces deux manques, une **position géographique peut être traduite en une série de caractères, mémorisable et facile à communiquer**.
 
 Plus cette série est longue, plus le geonym correspond à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
 
