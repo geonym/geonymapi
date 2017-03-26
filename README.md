@@ -72,12 +72,21 @@ Conversion X/Y lambert > geonym:
 Conversion adresse > geonym via géocodage intermédiaire:
 - http://api.geonym.fr/?adresse=39+quai+andré+citroen+paris
 
-Réponse:
-```{
+Réponse au format geojson:
+- **north/west/south/east** sont les limites du geonym
+- **lat/lon** correspond au centre de la bbox du geonym
+- **X/Y** correspond au coordonnées Lambert 93 du centre de la bbox du geonym
+- **params** contient les paramètres de la grille (alphabet et limites géographiques)
+- **geocode** contient la réponse du géocodeur
+- **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères)
+
+```
+{
+    "geocode": null,
     "geometry": {
         "coordinates": [
-            2.283656128,
-            48.85509449728001
+            2.2790806399999997,
+            48.846832486400004
         ],
         "type": "Point"
     },
@@ -89,21 +98,51 @@ Réponse:
         "min_lon": -5.45
     },
     "properties": {
-        "east": 2.2836600320000002,
-        "geonym": "PP7K-RF4R",
-        "lat": 48.85509449728001,
-        "lon": 2.283656128,
-        "north": 48.85509719552,
-        "south": 48.855091799040004,
-        "west": 2.283652224
+        "east": 2.2791001599999996,
+        "geonym": "PP7KRF4R",
+        "lat": 48.846832486400004,
+        "lon": 2.2790806399999997,
+        "north": 48.846845977600005,
+        "south": 48.8468189952,
+        "west": 2.2790611199999997,
+        "x": 647094,
+        "y": 6860995
+    },
+    "reverse": {
+        "attribution": "BAN",
+        "features": [
+            {
+                "geometry": {
+                    "coordinates": [
+                        2.279092,
+                        48.846828
+                    ],
+                    "type": "Point"
+                },
+                "properties": {
+                    "city": "Paris",
+                    "citycode": "75115",
+                    "context": "75, Île-de-France",
+                    "distance": 0,
+                    "housenumber": "39",
+                    "id": "75115_0318_91e007",
+                    "label": "39 Quai André Citroën 75015 Paris",
+                    "name": "39 Quai André Citroën",
+                    "postcode": "75015",
+                    "score": 0.9999999996245265,
+                    "street": "Quai André Citroën",
+                    "type": "housenumber"
+                },
+                "type": "Feature"
+            }
+        ],
+        "licence": "ODbL 1.0",
+        "limit": 1,
+        "source": "http://api-adresse.data.gouv.fr",
+        "type": "FeatureCollection",
+        "version": "draft"
     },
     "type": "Feature"
 }
-```
 
-- **north/west/south/east** sont les limites du geonym
-- **lat/lon** correspond au centre de la bbox du geonym
-- **X/Y** correspond au coordonnées Lambert 93 du centre de la bbox du geonym
-- **params** contient les paramètres de la grille (alphabet et limites géographiques)
-- **geocode** contient la réponse du géocodeur
-- **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères)
+```
