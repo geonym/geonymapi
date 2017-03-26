@@ -1,25 +1,24 @@
 # GeonymAPI
 
-Implémentation minimaliste d'une API de conversion Geonym <-> lat/lon
+Implémentation minimaliste d'une API de conversion Geonym <-> lat/lon disponible sur http://api.geonym.fr/
 
 L'API repose sur le module python Falcon, et un module geonym.py
 
+
 ## À propos des Géonym
 
-Un geonym est une traduction sous forme de chaine de caractère d'une position géographique.
-Plus cette chaine est longue, plus le geonym correspond à une petite zone géographique.
+Un geonym est une traduction sous forme de chaîne de caractère d'une position géographique.
+Plus cette chaîne est longue, plus le geonym correspond à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
 
 - P = zone de 234km x 234km
 - PP = zone de 47km x 47km inclue dans celle de 'P'
-- PP7 = zone de 9 x 9km inslue dans celle de 'PP'
+- PP7 = zone de 9 x 9km inclue dans celle de 'PP'
 - ...
 - PP7K-RF4V = zone de 3m x 3m correspondant à l'entrée de la Tour Mirabeau à Paris
 
 Voir: http://www.geonym.fr/visu/#19/48.84687/2.27924
 
-L'algorithme utilisé est identique à OpenPostcode (licence LGPL), avec un alphabet différent.
-
-Les caractères utilisés sont limités aux chiffres de 0 à 9 et aux consonnes non ambigües (0/D/O, 1/I, 2/Z, 4/A, 5/S, 6/G, 8/B).
+L'algorithme utilisé est identique à OpenPostcode (licence LGPL), avec un alphabet différent limités aux chiffres de 0 à 9 et aux consonnes non ambigües (0/D/O, 1/I, 2/Z, 4/A, 5/S, 6/G, 8/B).
 
 ![Alphabet geonym et répartition en spirale](https://raw.githubusercontent.com/geonym/visugeonym/master/img/geonym.png)
 
@@ -44,7 +43,7 @@ ou pour fonctionner en daemon avec rechargement automatique lorsque le code est 
 `gunicorn geonymapi:app -b 0.0.0.0:1405 -w 4 --reload -D`
 
 
-## Usage
+## Utilisation de l'API
 
 Conversion geonym > lat/lon:
 - http://api.geonym.fr/PP7K-RF4R
