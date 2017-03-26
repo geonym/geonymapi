@@ -9,6 +9,13 @@ L'API repose sur le module python Falcon, et un module geonym.py
 
 `git clone https://github.com/geonym/geonymapi.git`
 
+pour installer les modules pythons nécessaires:
+
+`pip install -r requirements.txt`
+
+L'idéal est de fonctionner dans un virtualenv python3.
+
+
 ## Test / serveur
 
 `gunicorn geonymapi:app -b 0.0.0.0:1405 -w 4`
