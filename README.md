@@ -66,6 +66,9 @@ Conversion geonym > lat/lon:
 Conversion lat/lon > geonym:
 - http://api.geonym.fr/?lat=48.8&lon=2.35
 
+Conversion X/Y lambert > geonym:
+- http://api.geonym.fr/?x=647095&y=6860995
+
 Conversion adresse > geonym via géocodage intermédiaire:
 - http://api.geonym.fr/?adresse=39+quai+andré+citroen+paris
 
@@ -100,6 +103,7 @@ Réponse:
 
 - **north/west/south/east** sont les limites du geonym
 - **lat/lon** correspond au centre de la bbox du geonym
+- **X/Y** correspond au coordonnées Lambert 93 du centre de la bbox du geonym
 - **params** contient les paramètres de la grille (alphabet et limites géographiques)
 - **geocode** contient la réponse du géocodeur
 - **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères)

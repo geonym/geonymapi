@@ -25,10 +25,11 @@ class GeonymResource(object):
         print(query)
         reverse=(len(query) >= 6)
 
+        # projections utilisées pour transformation en WGS84/Lambert93
+        s_srs = Proj(init='EPSG:2154')
+        t_srs = Proj(init='EPSG:4326')
+
         if 'x' in req.params and 'y' in req.params:
-            # projections utilisées pour transformation en WGS84
-            s_srs = Proj(init='EPSG:2154')
-            t_srs = Proj(init='EPSG:4326')
             lon,lat = transform(s_srs,t_srs,req.params['x'],req.params['y'])
             query = geonym.ll2geonym(lat, lon)
             reverse = True
@@ -52,6 +53,10 @@ class GeonymResource(object):
                 rev['source']=URL_GEOCODER
             else:
                 rev = None
+
+            x,y = transform(t_srs,s_srs,data['lon'],data['lat'])
+            data['x'] = int(x)
+            data['y'] = int(y)
 
             geojson = {"type":"Feature",
                 "properties":data,
