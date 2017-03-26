@@ -28,7 +28,6 @@ def ll2geonym(lat, lon):
     xx = (lon - grid_west) / (grid_east-grid_west) * 5**8
     y = base5(yy).zfill(8)
     x = base5(xx).zfill(8)
-    print(xx,yy,x,y)
     for d in range(0, 8):
         out += grid_alpha[int(y[d])*5+int(x[d])]
     return(out)
