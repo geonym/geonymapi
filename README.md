@@ -78,7 +78,7 @@ Réponse au format geojson:
 - **X/Y** correspond au coordonnées Lambert 93 du centre de la bbox du geonym
 - **params** contient les paramètres de la grille (alphabet et limites géographiques)
 - **geocode** contient la réponse du géocodeur
-- **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères)
+- **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères), sauf si reverse=no passé en paramètre de la requête.
 
 ```
 {

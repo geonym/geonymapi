@@ -45,6 +45,9 @@ class GeonymResource(object):
             query = geonym.ll2geonym(geo['features'][0]['geometry']['coordinates'][1], geo['features'][0]['geometry']['coordinates'][0])
             reverse=False
 
+        if 'reverse' in req.params and req.params['reverse']=='no':
+            reverse = False
+
         if query is not None and geonym.checkGeonym(query):
             data = geonym.geonym2ll(query)
             if reverse:
