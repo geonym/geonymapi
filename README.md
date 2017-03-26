@@ -20,7 +20,7 @@ Voir: http://www.geonym.fr/visu/#19/48.84687/2.27924
 
 L'algorithme utilisé est identique à OpenPostcode (licence LGPL), avec un alphabet différent limités aux chiffres de 0 à 9 et aux consonnes non ambigües (0/D/O, 1/I, 2/Z, 4/A, 5/S, 6/G, 8/B).
 
-![Alphabet geonym et répartition en spirale](https://raw.githubusercontent.com/geonym/visugeonym/master/img/geonym.png)
+![Alphabet geonym et répartition en spirale](https://raw.githubusercontent.com/geonym/visugeonym/master/img/geonym_small.png)
 
 
 ## Installation
