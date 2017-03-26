@@ -2,13 +2,16 @@
 
 Implémentation minimaliste d'une API de conversion Geonym <-> lat/lon disponible sur http://api.geonym.fr/
 
-L'API repose sur le module python Falcon, et un module geonym.py
+L'API repose sur le module python Falcon, et un module geonym.py (utilisable hors API par tout script python).
 
 
 ## À propos des Géonym
 
-Un geonym est une traduction sous forme de chaîne de caractère d'une position géographique.
-Plus cette chaîne est longue, plus le geonym correspond à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
+Communiquer la position d'un lieu se fait en général par une adresse, mais en l'absence d'adresse on ne peut que recourir aux coordonnées GPS peut faciles à mémoriser et trop variables dans leurs formats (dégrés, dégrés+minutes, dégrés+minutes+secondes, etc).
+
+Afin de combler ces deux manques, une position géographique peut être traduite en une série de caractères, mémorisable et facile à communiquer.
+
+Plus cette série est longue, plus le geonym correspond à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
 
 - P = zone de 234km x 234km
 - PP = zone de 47km x 47km inclue dans celle de 'P'
