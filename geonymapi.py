@@ -2,7 +2,6 @@
 
 import falcon
 import json
-import requests
 
 import geonym
 
