@@ -66,6 +66,9 @@ Conversion geonym > lat/lon:
 Conversion lat/lon > geonym:
 - http://api.geonym.fr/?lat=48.8&lon=2.35
 
+Conversion adresse > geonym via géocodage intermédiaire:
+- http://api.geonym.fr/?adresse=39+quai+andré+citroen+paris
+
 Réponse:
 ```{
     "geometry": {
@@ -95,6 +98,8 @@ Réponse:
 }
 ```
 
-- north/west/south/east sont les limites du geonym
-- lat/lon correspond au centre de la bbox du geonym
-- params contient les paramètres de la grille (alphabet et limites géographiques)
+- **north/west/south/east** sont les limites du geonym
+- **lat/lon** correspond au centre de la bbox du geonym
+- **params** contient les paramètres de la grille (alphabet et limites géographiques)
+- **geocode** contient la réponse du géocodeur
+- **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères)
