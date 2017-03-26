@@ -2,6 +2,7 @@
 
 import falcon
 import json
+import requests
 
 import geonym
 
@@ -17,16 +18,23 @@ class HeaderMiddleware:
 class GeonymResource(object):
     def getGeonym(self, req, resp, query=None):
         resp.status = falcon.HTTP_200
+        geo = None
         if 'lat' in req.params and 'lon' in req.params:
             query = geonym.ll2geonym(float(req.params['lat']), float(req.params['lon']))
         elif 'geonym' in req.params:
             query = req.params['geonym']
+        elif 'adresse' in req.params:
+            r = requests.get('http://api-adresse.data.gouv.fr/search', params={"q":req.params['adresse'], "autocomplete":0, "limit":1})
+            geo = json.loads(r.text)
+            geo['source']='http://api-adresse.data.gouv.fr/search'
+            query = geonym.ll2geonym(geo['features'][0]['geometry']['coordinates'][1], geo['features'][0]['geometry']['coordinates'][0])
 
         if query is not None and geonym.checkGeonym(query):
             data = geonym.geonym2ll(query)
             geojson = {"type":"Feature",
                 "properties":data,
                 "params":geonym.getParams(),
+                "geocode":geo,
                 "geometry":{"type":"Point","coordinates":[data['lon'],data['lat']]}}
             resp.body = json.dumps(geojson, sort_keys=True)
             resp.set_header('Content-type','application/json')
