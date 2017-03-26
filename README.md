@@ -11,7 +11,16 @@ Communiquer la position d'un lieu se fait en général par une adresse, mais en 
 
 Afin de combler ces deux manques, une **position géographique peut être traduite en une série de caractères, mémorisable et facile à communiquer**.
 
-Plus cette série est longue, plus le geonym correspond à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
+Contrairement à d'autres solutions, **Géonym est LIBRE**, basé sur une algorithme sous licence LGPL et ne dépendant pas d'une API (le calcul est simple et peut se faire directement côté client).
+
+
+## Comment ça marche ?
+
+Une grille fixe est choisie pour une région donnée. Dans notre cas cette grille correspond à la France métropolitaine et englobe la majeure partie des eaux territoriales.
+
+Elle est découpée en zones de 5 x 5, elles mêmes découpées en 5 x 5 et ainsi de suite. Voir: http://www.geonym.fr/visu pour visualiser les zones et le fonctionnement.
+
+A chaque zone on fait correspondre un chiffre ou une consonne qui forme ainsi une série de caractères. Plus cette série est longue, plus le geonym correspond donc à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
 
 - P = zone de 234km x 234km
 - PP = zone de 47km x 47km inclue dans celle de 'P'
