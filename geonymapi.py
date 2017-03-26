@@ -3,6 +3,7 @@
 import falcon
 import json
 import requests
+from pyproj import Proj, transform
 
 import geonym
 
@@ -23,7 +24,15 @@ class GeonymResource(object):
         geo = None
         print(query)
         reverse=(len(query) >= 6)
-        if 'lat' in req.params and 'lon' in req.params:
+
+        if 'x' in req.params and 'y' in req.params:
+            # projections utilisées pour transformation en WGS84
+            s_srs = Proj(init='EPSG:2154')
+            t_srs = Proj(init='EPSG:4326')
+            lon,lat = transform(s_srs,t_srs,req.params['x'],req.params['y'])
+            query = geonym.ll2geonym(lat, lon)
+            reverse = True
+        elif 'lat' in req.params and 'lon' in req.params:
             query = geonym.ll2geonym(float(req.params['lat']), float(req.params['lon']))
         elif 'geonym' in req.params:
             query = req.params['geonym']
