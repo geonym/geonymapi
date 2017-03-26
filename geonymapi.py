@@ -64,7 +64,7 @@ class GeonymResource(object):
                 "geocode":geo,
                 "reverse":rev,
                 "geometry":{"type":"Point","coordinates":[data['lon'],data['lat']]}}
-            resp.body = json.dumps(geojson, sort_keys=True)
+            resp.body = json.dumps(geojson, sort_keys=True, indent=4, separators=(',', ': '))
             resp.set_header('Content-type','application/json')
         else:
             resp.status = falcon.HTTP_400
