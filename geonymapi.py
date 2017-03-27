@@ -67,7 +67,7 @@ class GeonymResource(object):
                 "params":geonym.getParams(),
                 "geocode":geo,
                 "reverse":rev,
-                "geometry":{"type":"Point","coordinates":[data['lon'],data['lat']]}}
+                "geometry":{"type":"Polygon","coordinates":[[[data['west'],data['south']],[data['east'],data['south']],[data['east'],data['north']],[data['west'],data['north']],[data['west'],data['south']]]]}}
             resp.body = json.dumps(geojson, sort_keys=True, indent=4, separators=(',', ': '))
             resp.set_header('Content-type','application/json')
         else:
