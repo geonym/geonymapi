@@ -1,9 +1,10 @@
-# GeonymAPI
+# GeonymAPI (expérimentation !)
 
 Implémentation minimaliste d'une API de conversion *geonym* <-> lat/lon disponible sur http://api.geonym.fr/
 
 L'API repose sur le module python Falcon, et un module geonym.py (utilisable hors API par tout script python).
 
+**ATTENTION** : les geonym actuellement calculés peuvent évoluer. Cette implémentation a pour but de tester le concept et les paramètres de grille seront fixés officiellement et définitivement à l'issu de celle-ci. Ils pourront donc changer !
 
 ## À propos des Géonym
 
