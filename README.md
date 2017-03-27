@@ -12,7 +12,7 @@ Communiquer la position d'un lieu se fait en général par une adresse, mais en 
 
 Afin de combler ces deux manques, une **position géographique peut être traduite en une série de caractères, mémorisable et facile à communiquer**.
 
-Contrairement à d'autres solutions, **Géonym est LIBRE**, basé sur un algorithme sous licence LGPL ([openspostcode](http://www.openspostcode.org)) et ne dépendant pas d'une API. Le calcul est simple et peut se faire directement côté client.
+Contrairement à d'autres solutions, **Géonym est LIBRE**, basé sur un algorithme sous licence LGPL ([openpostcode](http://www.openpostcode.org)) et ne dépendant pas d'une API. Le calcul est simple et peut se faire directement côté client.
 
 
 ## Comment ça marche ?
