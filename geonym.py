@@ -39,7 +39,6 @@ def ll2geonym(lat, lon):
         lat = (lat+13.5)*1 + grid_south + grid_h*4 + 1
         lon = (lon-45)*1 + grid_west
 
-    print(lat,lon)
     if (lat >= grid_north or lat <= grid_south or lon >= grid_east or lon <= grid_west):
         return None;
     yy = (grid_north - lat) / (grid_north-grid_south) * 5**8
@@ -70,25 +69,21 @@ def geonym2ll(geonym):
 
     # décalage pour les DOM
     if geonym[0]=='0': # guyane
-      print("Guyane")
       north = (north-grid_south)/0.5 + 2
       south = (south-grid_south)/0.5 + 2
       west = (west-grid_west)/0.5 - 55
       east = (east-grid_west)/0.5 - 55
     elif north < grid_south+grid_h*2 and east<grid_west+3: # martinique/guadeloupe
-      print("Martinique")
       north = (north-grid_south-grid_h)/1 + 14
       south = (south-grid_south-grid_h)/1 + 14
       west = (west-grid_west)/1 -62
       east = (east-grid_west)/1 -62
     elif north > grid_south+grid_h*4+1 and east<grid_west+1: # mayotte
-      print("Mayotte")
       north = (north-grid_south-grid_h*4-1)/1 -13.5
       south = (south-grid_south-grid_h*4-1)/1 -13.5
       west = (west-grid_west)/1 +45
       east = (east-grid_west)/1 +45
     elif north > grid_south+grid_h*4 and east<grid_west+1: # réunion
-      print("Réunion")
       north = (north-grid_south-grid_h*4)/1 - 21.6
       south = (south-grid_south-grid_h*4)/1 - 21.6
       west = (west-grid_west)/1 + 55
