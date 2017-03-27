@@ -19,10 +19,28 @@ grid_south = 40.91
 grid_east = 9.8
 grid_alpha = "456783NPR92MXTC1LWVD0KJHF"
 
+
 def ll2geonym(lat, lon):
     "Conversion lat/lon -> geonym"
     out = ''
-    if (lat>grid_north or lat < grid_south or lon > grid_east or lon < grid_west):
+    grid_h = (grid_north-grid_south)/5
+    grid_w = (grid_east-grid_west)/5
+
+    if (lat<=5.8 and lat>=2 and lon>=-55 and lon<=-50): # guyane > zone '0'
+        lat = (lat-2)*0.5 + grid_south
+        lon = (lon+55)*0.5 + grid_west
+    elif (lat<=-20.6 and lat>=-21.6 and lon>=55 and lon<=56): # réunion > zone '4'
+        lat = (lat+21.6)*1 + grid_south + grid_h*4
+        lon = (lon-55)*1 + grid_west
+    elif (lat<=17 and lat>=14 and lon>=-62 and lon<=-60.5): # martinique/guadeloupe > zone '1'
+        lat = (lat-14)*1 + grid_south + grid_h
+        lon = (lon+62)*1 + grid_west
+    elif (lat<=-12.5 and lat>=-13.5 and lon>=45 and lon<=45.5): # mayotte > zone '4'
+        lat = (lat+13.5)*1 + grid_south + grid_h*4 + 1
+        lon = (lon-45)*1 + grid_west
+
+    print(lat,lon)
+    if (lat >= grid_north or lat <= grid_south or lon >= grid_east or lon <= grid_west):
         return None;
     yy = (grid_north - lat) / (grid_north-grid_south) * 5**8
     xx = (lon - grid_west) / (grid_east-grid_west) * 5**8
@@ -41,14 +59,46 @@ def geonym2ll(geonym):
         x = x*5 + p % 5
         y = y*5 + p // 5
     north = grid_north - (grid_north-grid_south) * y / (5**len(geonym))
-    south = grid_north - (grid_north-grid_south) * (y+1) / (5**len(geonym))
+    # south = grid_north - (grid_north-grid_south) * (y+1) / (5**len(geonym))
+    south = north - (grid_north-grid_south) / (5**len(geonym))
     west = grid_west + (grid_east-grid_west) / (5**len(geonym)) * x
-    east = grid_west + (grid_east-grid_west) / (5**len(geonym)) * (x+1)
+    east = west + (grid_east-grid_west) / (5**len(geonym))
+    # east = grid_west + (grid_east-grid_west) / (5**len(geonym)) * (x+1)
+
+    grid_h = (grid_north-grid_south)/5
+    grid_w = (grid_east-grid_west)/5
+
+    # décalage pour les DOM
+    if geonym[0]=='0': # guyane
+      print("Guyane")
+      north = (north-grid_south)/0.5 + 2
+      south = (south-grid_south)/0.5 + 2
+      west = (west-grid_west)/0.5 - 55
+      east = (east-grid_west)/0.5 - 55
+    elif north < grid_south+grid_h*2 and east<grid_west+3: # martinique/guadeloupe
+      print("Martinique")
+      north = (north-grid_south-grid_h)/1 + 14
+      south = (south-grid_south-grid_h)/1 + 14
+      west = (west-grid_west)/1 -62
+      east = (east-grid_west)/1 -62
+    elif north > grid_south+grid_h*4+1 and east<grid_west+1: # mayotte
+      print("Mayotte")
+      north = (north-grid_south-grid_h*4-1)/1 -13.5
+      south = (south-grid_south-grid_h*4-1)/1 -13.5
+      west = (west-grid_west)/1 +45
+      east = (east-grid_west)/1 +45
+    elif north > grid_south+grid_h*4 and east<grid_west+1: # réunion
+      print("Réunion")
+      north = (north-grid_south-grid_h*4)/1 - 21.6
+      south = (south-grid_south-grid_h*4)/1 - 21.6
+      west = (west-grid_west)/1 + 55
+      east = (east-grid_west)/1 + 55
+
     return {'geonym':geonym, 'north':north, 'west':west, 'south':south, 'east':east, 'lat': (north+south)/2, 'lon': (west+east)/2}
 
 def checkGeonym(geonym):
     "Vérifie la validité d'un géonym"
-    m = re.match(r'^[45673NPR92MXTCLWVDKJHF][456783NPR92MXTC1LWVD0KJHF]*$', geonym.replace('-',''))
+    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*$', geonym.replace('-',''))
     return(m!=None)
 
 def getParams():

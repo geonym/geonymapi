@@ -20,7 +20,7 @@ Une grille fixe est choisie pour une région donnée. Dans notre cas cette grill
 
 Elle est découpée en 25 zones de (5 x 5), elles mêmes découpées en 25 et ainsi de suite. Voir: http://www.geonym.fr/visu pour visualiser les zones et le fonctionnement (n'hésitez pas à zoomer).
 
-Le territoire couvert est ainsi découpé au final en milliards de carrés de 3m x 3m (plus de 60 milliards sur le territoire métropolitain).
+Le territoire couvert est ainsi découpé au final en milliards de carrés de 3m x 3m (plus de 60 milliards sur le territoire métropolitain). Pour les DOM, ceux-ci sont remis dans les zones 0,1,4 de la grille qui ne recouvrent pas de territoire métropolitain.
 
 A chaque zone on fait correspondre un chiffre ou une consonne qui forme ainsi une série de caractères. Plus cette série est longue, plus le *geonym* correspond donc à une petite zone géographique (25 fois plus petite en surface, donc des côtés 5 fois plus petits).
 

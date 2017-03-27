@@ -22,7 +22,6 @@ class GeonymResource(object):
     def getGeonym(self, req, resp, query=None):
         resp.status = falcon.HTTP_200
         geo = None
-        print(query)
         reverse=(len(query) >= 6)
 
         # projections utilisées pour transformation en WGS84/Lambert93
@@ -58,8 +57,10 @@ class GeonymResource(object):
                 rev = None
 
             x,y = transform(t_srs,s_srs,data['lon'],data['lat'])
-            data['x'] = int(x)
-            data['y'] = int(y)
+            # on ne retourne les coordonnées Lambert que si on est en zone Lambert93
+            if y > -357823.2365 and x > 6037008.6939 and y < 1313632.3628 and x< 7230727.3772:
+                data['x'] = int(x)
+                data['y'] = int(y)
 
             geojson = {"type":"Feature",
                 "properties":data,
