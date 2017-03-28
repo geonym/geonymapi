@@ -18,14 +18,20 @@ grid_west  = -5.45
 grid_south = 40.91
 grid_east = 9.8
 grid_alpha = "456783NPR92MXTC1LWVD0KJHF"
+grid_h = (grid_north-grid_south)/5
+grid_w = (grid_east-grid_west)/5
 
+# paramètres sous-grille FR
+grid_sub = [{"name":"Guyane",   "north":5.8,    "south":2,      "west":-55, "east":-50,     "scale":0.5,    "x":0,          "y":0},
+            {"name":"Antilles", "north":17,     "south":14,     "west":-62, "east":-60.5,   "scale":1,      "x":grid_h,     "y":0},
+            {"name":"Réunion",  "north":-20.6,  "south":-21.6,  "west":55,  "east":56,      "scale":1,      "x":grid_h*4,   "y":0},
+            {"name":"Mayotte",  "north":-12.5,  "south":14,     "west":45,  "east":45.5,    "scale":1,      "x":grid_h+1,   "y":0}]
 
 def ll2geonym(lat, lon):
     "Conversion lat/lon -> geonym"
     out = ''
-    grid_h = (grid_north-grid_south)/5
-    grid_w = (grid_east-grid_west)/5
 
+    # sous-grilles
     if (lat<=5.8 and lat>=2 and lon>=-55 and lon<=-50): # guyane > zone '0'
         lat = (lat-2)*0.5 + grid_south
         lon = (lon+55)*0.5 + grid_west
@@ -53,6 +59,7 @@ def geonym2ll(geonym):
     "Conversion geonym -> lat/lon"
     x = 0
     y = 0
+    geonym = geonym.upper()
     for d in range(0,len(geonym)):
         p = grid_alpha.find(geonym[d])
         x = x*5 + p % 5
@@ -63,9 +70,6 @@ def geonym2ll(geonym):
     west = grid_west + (grid_east-grid_west) / (5**len(geonym)) * x
     east = west + (grid_east-grid_west) / (5**len(geonym))
     # east = grid_west + (grid_east-grid_west) / (5**len(geonym)) * (x+1)
-
-    grid_h = (grid_north-grid_south)/5
-    grid_w = (grid_east-grid_west)/5
 
     # décalage pour les DOM
     if geonym[0]=='0': # guyane
@@ -93,7 +97,7 @@ def geonym2ll(geonym):
 
 def checkGeonym(geonym):
     "Vérifie la validité d'un géonym"
-    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*$', geonym.replace('-',''))
+    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*$', geonym.upper().replace('-',''))
     return(m!=None)
 
 def getParams():
