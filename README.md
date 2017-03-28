@@ -6,6 +6,7 @@ L'API repose sur le module python Falcon, et un module geonym.py (utilisable hor
 
 **ATTENTION** : les geonym actuellement calculés peuvent évoluer. Cette implémentation a pour but de tester le concept et les paramètres de grille seront fixés officiellement et définitivement à l'issu de celle-ci. Ils pourront donc changer !
 
+
 ## À propos des Géonym
 
 Communiquer la position d'un lieu se fait en général par une adresse, mais en l'absence d'adresse on ne peut que recourir aux coordonnées GPS peut faciles à mémoriser et trop variables dans leurs formats (dégrés, dégrés+minutes, dégrés+minutes+secondes, etc).
@@ -80,11 +81,10 @@ Réponse au format geojson:
 - **X/Y** correspond au coordonnées Lambert 93 du centre de la bbox du geonym
 - **params** contient les paramètres de la grille (alphabet et limites géographiques)
 - **geocode** contient la réponse du géocodeur
-- **reverse** contient l'adresse la plus proche trouvée par géocodage inversé (pour les géonym d'au moins 6 caractères), sauf si reverse=no passé en paramètre de la requête.
+- **reverse** si reverse=yes passé en paramètre de la requête contient l'adresse la plus proche trouvée par géocodage inversé.
 
 ```
 {
-    "geocode": null,
     "params": {
         "alpha": "456783NPR92MXTC1LWVD0KJHF",
         "max_lat": 51.45,

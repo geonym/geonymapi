@@ -22,7 +22,6 @@ class GeonymResource(object):
     def getGeonym(self, req, resp, query=None):
         resp.status = falcon.HTTP_200
         geo = None
-        reverse=(len(query) >= 6)
 
         # projections utilisées pour transformation en WGS84/Lambert93
         s_srs = Proj(init='EPSG:2154')
@@ -31,25 +30,19 @@ class GeonymResource(object):
         if 'x' in req.params and 'y' in req.params:
             lon,lat = transform(s_srs,t_srs,req.params['x'],req.params['y'])
             query = geonym.ll2geonym(lat, lon)
-            reverse = True
         elif 'lat' in req.params and 'lon' in req.params:
             query = geonym.ll2geonym(float(req.params['lat']), float(req.params['lon']))
         elif 'geonym' in req.params:
             query = req.params['geonym']
-            reverse = True
         elif 'adresse' in req.params:
             r = requests.get(URL_GEOCODER+'/search', params={"q":req.params['adresse'], "autocomplete":0, "limit":1})
             geo = json.loads(r.text)
             geo['source']=URL_GEOCODER
             query = geonym.ll2geonym(geo['features'][0]['geometry']['coordinates'][1], geo['features'][0]['geometry']['coordinates'][0])
-            reverse=False
-
-        if 'reverse' in req.params and req.params['reverse']=='no':
-            reverse = False
 
         if query is not None and geonym.checkGeonym(query):
             data = geonym.geonym2ll(query)
-            if reverse:
+            if 'reverse' in req.params and req.params['reverse']=='yes':
                 r = requests.get(URL_GEOCODER+'/reverse', params={"lat":data['lat'],"lon":data['lon'],"limit":1})
                 rev = json.loads(r.text)
                 rev['source']=URL_GEOCODER
@@ -65,9 +58,11 @@ class GeonymResource(object):
             geojson = {"type":"Feature",
                 "properties":data,
                 "params":geonym.getParams(),
-                "geocode":geo,
-                "reverse":rev,
                 "geometry":{"type":"Polygon","coordinates":[[[data['west'],data['south']],[data['east'],data['south']],[data['east'],data['north']],[data['west'],data['north']],[data['west'],data['south']]]]}}
+            if rev is not None:
+                geojson['reverse'] = rev
+            if geo is not None:
+                geojson['geocode'] = geo
             resp.body = json.dumps(geojson, sort_keys=True, indent=4, separators=(',', ': '))
             resp.set_header('Content-type','application/json')
         else:
