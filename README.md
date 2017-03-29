@@ -79,12 +79,14 @@ Réponse au format geojson:
 - **north/west/south/east** sont les limites du geonym
 - **lat/lon** correspond au centre de la bbox du geonym
 - **X/Y** correspond au coordonnées Lambert 93 du centre de la bbox du geonym
+- **link** lien pour visualiser la zone couverte par le geonym sur un fond de carte
 - **params** contient les paramètres de la grille (alphabet et limites géographiques)
 - **geocode** contient la réponse du géocodeur
 - **reverse** si reverse=yes passé en paramètre de la requête contient l'adresse la plus proche trouvée par géocodage inversé.
 
 ```
 {
+    "link": "http://www.geonym.fr/visu/?g=PP7KRF4R#16/48.846832/2.279081",
     "params": {
         "alpha": "456783NPR92MXTC1LWVD0KJHF",
         "max_lat": 51.45,
