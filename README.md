@@ -86,7 +86,7 @@ Réponse au format geojson:
 
 ```
 {
-    "link": "http://www.geonym.fr/visu/?g=PP7KRF4R#16/48.846832/2.279081",
+    "link": "http://www.geonym.fr/visu/?g=PP7KRF4R",
     "params": {
         "alpha": "456783NPR92MXTC1LWVD0KJHF",
         "max_lat": 51.45,
