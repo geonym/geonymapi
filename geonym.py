@@ -59,7 +59,7 @@ def geonym2ll(geonym):
     "Conversion geonym -> lat/lon"
     x = 0
     y = 0
-    geonym = geonym.upper()
+    geonym = geonym.upper().replace('-','')
     for d in range(0,len(geonym)):
         p = grid_alpha.find(geonym[d])
         x = x*5 + p % 5
