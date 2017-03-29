@@ -35,19 +35,19 @@ class GeonymResource(object):
         elif 'geonym' in req.params:
             query = req.params['geonym']
         elif 'adresse' in req.params:
-            r = requests.get(URL_GEOCODER+'/search', params={"q":req.params['adresse'], "autocomplete":0, "limit":1})
+            r = requests.get(URL_GEOCODER+'/search', params={"q":req.params['adresse'], "autocomplete":0, "limit":1}, timeout=1)
             geo = json.loads(r.text)
             geo['source']=URL_GEOCODER
             query = geonym.ll2geonym(geo['features'][0]['geometry']['coordinates'][1], geo['features'][0]['geometry']['coordinates'][0])
 
         if query is not None and geonym.checkGeonym(query):
+            rev = None
             data = geonym.geonym2ll(query)
             if 'reverse' in req.params and req.params['reverse']=='yes':
-                r = requests.get(URL_GEOCODER+'/reverse', params={"lat":data['lat'],"lon":data['lon'],"limit":1})
-                rev = json.loads(r.text)
-                rev['source']=URL_GEOCODER
-            else:
-                rev = None
+                r = requests.get(URL_GEOCODER+'/reverse', params={"lat":data['lat'],"lon":data['lon'],"limit":1}, timeout=1)
+                if r.status_code == 200:
+                    rev = json.loads(r.text)
+                    rev['source']=URL_GEOCODER
 
             x,y = transform(t_srs,s_srs,data['lon'],data['lat'])
             # on ne retourne les coordonnées Lambert que si on est en zone Lambert93
