@@ -59,7 +59,8 @@ def geonym2ll(geonym):
     "Conversion geonym -> lat/lon"
     x = 0
     y = 0
-    geonym = geonym.upper().replace('-','')
+
+    geonym = cleanGeonym(geonym)
     for d in range(0,len(geonym)):
         p = grid_alpha.find(geonym[d])
         x = x*5 + p % 5
@@ -97,8 +98,27 @@ def geonym2ll(geonym):
 
 def checkGeonym(geonym):
     "Vérifie la validité d'un géonym"
-    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*$', geonym.upper().replace('-',''))
+    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*$', cleanGeonym(geonym).upper().replace('-',''))
     return(m!=None)
+
+
+def cleanGeonym(geonym):
+    geonym = geonym.upper().replace('-','')
+
+    # remplacement erreurs alphabet
+    geonym = geonym.replace('A','4')
+    geonym = geonym.replace('B','8')
+    geonym = geonym.replace('E','F')
+    geonym = geonym.replace('G','6')
+    geonym = geonym.replace('I','1')
+    geonym = geonym.replace('O','0')
+    geonym = geonym.replace('Q','0')
+    geonym = geonym.replace('S','5')
+    geonym = geonym.replace('U','V')
+    geonym = geonym.replace('Y','V')
+    geonym = geonym.replace('Z','2')
+    return geonym
+
 
 def getParams():
     "Paramètres de grille / alphabet"

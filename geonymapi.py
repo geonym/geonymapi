@@ -57,7 +57,7 @@ class GeonymResource(object):
 
             geojson = {"type":"Feature",
                 "properties":data,
-                "link": "http://www.geonym.fr/visu/?g=%s" % (query.upper(),),
+                "link": "http://www.geonym.fr/visu/?g=%s" % (geonym.cleanGeonym(query),),
                 "params":geonym.getParams(),
                 "geometry":{"type":"Polygon","coordinates":[[[data['west'],data['south']],[data['east'],data['south']],[data['east'],data['north']],[data['west'],data['north']],[data['west'],data['south']]]]}}
             if rev is not None:
