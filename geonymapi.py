@@ -55,6 +55,8 @@ class GeonymResource(object):
                 data['x'] = int(x)
                 data['y'] = int(y)
 
+            data['checksum'] = geonym.checksum(query)
+
             geojson = {"type":"Feature",
                 "properties":data,
                 "link": "http://www.geonym.fr/visu/?g=%s" % (query.upper(),),
