@@ -56,6 +56,10 @@ def geonym2ll(geonym):
     y = 0
     grid = grid_fr
     geonym = geonym.upper().replace('-','')
+    # strip checksum
+    if geonym.find('/')>0:
+        geonym = geonym[:geonym.find('/')]
+
     for d in range(0,len(geonym)):
         p = grid['alphabet'].find(geonym[d])
         x = x*5 + p % 5
@@ -80,7 +84,7 @@ def geonym2ll(geonym):
 
 def checkGeonym(geonym):
     "Vérifie la validité d'un géonym"
-    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*$', geonym.upper().replace('-',''))
+    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*(|/[0123456789ACDEFGHJKLMNPQRTUVWXY])$', geonym.upper().replace('-',''))
     return(m!=None)
 
 def getParams():
@@ -90,6 +94,10 @@ def getParams():
 def checksum(geonym):
     "Calcule de checksum d'un géonym"
     geonym = geonym.upper().replace('-','')
+    if geonym.find('/')>0:
+        geonym = geonym[:geonym.find('/')]
+    if len(geonym)!=8:
+        return None
     grid = grid_fr
     c = 0
     for p in range(0,len(geonym)):
