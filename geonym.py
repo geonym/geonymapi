@@ -86,3 +86,12 @@ def checkGeonym(geonym):
 def getParams():
     "Paramètres de grille / alphabet"
     return {'max_lat': grid_fr['north'], 'min_lat':grid_fr['south'],'min_lon':grid_fr['west'],'max_lon':grid_fr['east'],'alpha':grid_fr['alphabet']}
+
+def checksum(geonym):
+    "Calcule de checksum d'un géonym"
+    geonym = geonym.upper().replace('-','')
+    grid = grid_fr
+    c = 0
+    for p in range(0,len(geonym)):
+        c += grid['alphabet'].find(geonym[p])*(p+1)
+    return(grid['checksum'][c % 31])
