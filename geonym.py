@@ -55,11 +55,7 @@ def geonym2ll(geonym):
     x = 0
     y = 0
     grid = grid_fr
-    geonym = geonym.upper().replace('-','')
-    # strip checksum
-    if geonym.find('/')>0:
-        geonym = geonym[:geonym.find('/')]
-
+    geonym = cleanGeonym(geonym)
     for d in range(0,len(geonym)):
         p = grid['alphabet'].find(geonym[d])
         x = x*5 + p % 5
@@ -87,15 +83,35 @@ def checkGeonym(geonym):
     m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*(|/[0123456789ACDEFGHJKLMNPQRTUVWXY])$', geonym.upper().replace('-',''))
     return(m!=None)
 
+
+def cleanGeonym(geonym):
+    geonym = geonym.upper().replace('-','')
+    # strip checksum
+    if geonym.find('/')>0:
+        geonym = geonym[:geonym.find('/')]
+
+    # remplacement erreurs alphabet
+    geonym = geonym.replace('A','4')
+    geonym = geonym.replace('B','8')
+    geonym = geonym.replace('E','F')
+    geonym = geonym.replace('G','6')
+    geonym = geonym.replace('I','1')
+    geonym = geonym.replace('O','0')
+    geonym = geonym.replace('Q','0')
+    geonym = geonym.replace('S','5')
+    geonym = geonym.replace('U','V')
+    geonym = geonym.replace('Y','V')
+    geonym = geonym.replace('Z','2')
+    return geonym
+
+
 def getParams():
     "Paramètres de grille / alphabet"
     return {'max_lat': grid_fr['north'], 'min_lat':grid_fr['south'],'min_lon':grid_fr['west'],'max_lon':grid_fr['east'],'alpha':grid_fr['alphabet']}
 
 def checksum(geonym):
     "Calcule de checksum d'un géonym"
-    geonym = geonym.upper().replace('-','')
-    if geonym.find('/')>0:
-        geonym = geonym[:geonym.find('/')]
+    geonym = cleanGeonym(geonym)
     if len(geonym)!=8:
         return None
     grid = grid_fr
