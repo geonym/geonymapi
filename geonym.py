@@ -120,8 +120,6 @@ def getParams():
 def checksum(geonym):
     "Calcule de checksum d'un géonym"
     geonym = cleanGeonym(geonym)
-    if len(geonym)!=8:
-        return None
     grid = grid_fr
     c = 0
     for p in range(0,len(geonym)):
