@@ -34,13 +34,14 @@ def ll2geonym(lat, lon):
 
     # sous-grilles
     for sub in grid_fr_sub:
-        if (lat <= sub['north'] and lat >= sub['south'] and lon >= sub['west'] and lon <= sub['east']):
-            print(sub['name'])
+        if (lat <= sub['north'] and lat >= sub['south'] \
+            and lon >= sub['west'] and lon <= sub['east']):
             lat = (lat - sub['south'])*sub['scale'] + grid['south'] + sub['x']
             lon = (lon - sub['west'])*sub['scale'] + grid['west'] + sub['y']
             break
 
-    if (lat >= grid['north'] or lat <= grid['south'] or lon >= grid['east'] or lon <= grid['west']):
+    if (lat >= grid['north'] or lat <= grid['south'] \
+        or lon >= grid['east'] or lon <= grid['west']):
         return None;
     yy = (grid['north'] - lat) / (grid['north']-grid['south']) * 5**8
     xx = (lon - grid['west']) / (grid['east']-grid['west']) * 5**8
@@ -69,18 +70,23 @@ def geonym2ll(geonym):
 
     # recalage pour les DOM
     for sub in grid_fr_sub:
-        if north < grid['south'] + sub['x'] + (sub['north']-sub['south'])*sub['scale'] and south > grid['south'] + sub['x'] and west > grid['west'] + sub['y'] and east < grid['west'] + sub['y'] + (sub['east']-sub['west'])*sub['scale']:
+        if north < grid['south'] + sub['x'] + (sub['north']-sub['south'])*sub['scale'] \
+            and south > grid['south'] + sub['x'] \
+            and west > grid['west'] + sub['y'] \
+            and east < grid['west'] + sub['y'] + (sub['east']-sub['west'])*sub['scale']:
           north = (north-grid['south']-sub['x'])/sub['scale'] + sub['south']
           south = (south-grid['south']-sub['x'])/sub['scale'] + sub['south']
           west = (west-grid['west']-sub['y'])/sub['scale'] + sub['west']
           east = (east-grid['west']-sub['y'])/sub['scale'] + sub['west']
           break
 
-    return {'geonym':geonym, 'north':north, 'west':west, 'south':south, 'east':east, 'lat': (north+south)/2, 'lon': (west+east)/2}
+    return {'geonym':geonym, 'north':north, 'west':west, 'south':south,
+            'east':east, 'lat': (north+south)/2, 'lon': (west+east)/2}
 
 def checkGeonym(geonym):
     "Vérifie la validité d'un géonym"
-    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*(|/[0123456789ACDEFGHJKLMNPQRTUVWXY])$', geonym.upper().replace('-',''))
+    m = re.match(r'^[456783NPR92MXTC1LWVD0KJHF]*(|/[0123456789ACDEFGHJKLMNPQRTUVWXY])$',
+                 geonym.upper().replace('-',''))
     return(m!=None)
 
 
@@ -107,7 +113,9 @@ def cleanGeonym(geonym):
 
 def getParams():
     "Paramètres de grille / alphabet"
-    return {'max_lat': grid_fr['north'], 'min_lat':grid_fr['south'],'min_lon':grid_fr['west'],'max_lon':grid_fr['east'],'alpha':grid_fr['alphabet']}
+    return {'max_lat': grid_fr['north'], 'min_lat':grid_fr['south'],
+            'min_lon':grid_fr['west'],'max_lon':grid_fr['east'],
+            'alphabet':grid_fr['alphabet'],'checksum':grid_fr['checksum']}
 
 def checksum(geonym):
     "Calcule de checksum d'un géonym"
