@@ -22,10 +22,10 @@ grid_fr = {"north": 51.45,
 grid_h = (grid_fr['north']-grid_fr['south'])/5
 grid_w = (grid_fr['east']-grid_fr['west'])/5
 # paramètres sous-grille FR
-grid_fr_sub = [ {"name":"Guyane",   "north":  5.8,  "south":  2,    "west":-55, "east":-50,    "scale":0.5,  "x":0,          "y":0},
-                {"name":"Antilles", "north": 17,    "south": 14,    "west":-62, "east":-60.5,  "scale":1,    "x":grid_h,     "y":0},
-                {"name":"Réunion",  "north":-20.6,  "south":-21.6,  "west": 55, "east": 56,    "scale":1,    "x":grid_h*4,   "y":0},
-                {"name":"Mayotte",  "north":-12.5,  "south":-14,    "west": 45, "east": 45.5,  "scale":1,    "x":grid_h*4+1, "y":0}]
+grid_fr_sub = [ {"name":"Guyane",   "north":  5.8,  "south":  2,    "west":-55, "east":-50,    "scale":0.5,  "x":0,          "y":0, "alpha":"0"},
+                {"name":"Antilles", "north": 17,    "south": 14,    "west":-62, "east":-60.5,  "scale":1,    "x":grid_h,     "y":0, "alpha":"1"},
+                {"name":"Réunion",  "north":-20.6,  "south":-21.6,  "west": 55, "east": 56,    "scale":1,    "x":grid_h*4,   "y":0, "alpha":"4"},
+                {"name":"Mayotte",  "north":-12.5,  "south":-14,    "west": 45, "east": 45.5,  "scale":1,    "x":grid_h*4+1, "y":0, "alpha":"4"}]
 
 def ll2geonym(lat, lon):
     "Conversion lat/lon -> geonym"
@@ -70,15 +70,16 @@ def geonym2ll(geonym):
 
     # recalage pour les DOM
     for sub in grid_fr_sub:
-        if north < grid['south'] + sub['x'] + (sub['north']-sub['south'])*sub['scale'] \
-            and south > grid['south'] + sub['x'] \
-            and west > grid['west'] + sub['y'] \
-            and east < grid['west'] + sub['y'] + (sub['east']-sub['west'])*sub['scale']:
-          north = (north-grid['south']-sub['x'])/sub['scale'] + sub['south']
-          south = (south-grid['south']-sub['x'])/sub['scale'] + sub['south']
-          west = (west-grid['west']-sub['y'])/sub['scale'] + sub['west']
-          east = (east-grid['west']-sub['y'])/sub['scale'] + sub['west']
-          break
+        if geonym[0]==sub['alpha']:
+            if north < grid['south'] + sub['x'] + (sub['north']-sub['south'])*sub['scale'] \
+                and south > grid['south'] + sub['x'] \
+                and west > grid['west'] + sub['y'] \
+                and east < grid['west'] + sub['y'] + (sub['east']-sub['west'])*sub['scale']:
+              north = (north-grid['south']-sub['x'])/sub['scale'] + sub['south']
+              south = (south-grid['south']-sub['x'])/sub['scale'] + sub['south']
+              west = (west-grid['west']-sub['y'])/sub['scale'] + sub['west']
+              east = (east-grid['west']-sub['y'])/sub['scale'] + sub['west']
+              break
 
     return {'geonym':geonym, 'north':north, 'west':west, 'south':south,
             'east':east, 'lat': (north+south)/2, 'lon': (west+east)/2}
