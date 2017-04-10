@@ -90,18 +90,19 @@ Réponse au format geojson:
     "params": {
         "alpha": "456783NPR92MXTC1LWVD0KJHF",
         "max_lat": 51.45,
-        "max_lon": 9.8,
         "min_lat": 40.91,
+        "max_lon": 9.8,
         "min_lon": -5.45
     },
     "properties": {
-        "east": 2.283660032,
-        "geonym": "PP7K-RF4R",
-        "lat": 48.85509449728001,
-        "lon": 2.2836561279999996,
         "north": 48.85509719552,
         "south": 48.855091799040004,
-        "west": 2.283652224
+        "east": 2.283660032,
+        "west": 2.283652224,
+        "lat": 48.85509449728001,
+        "lon": 2.2836561279999996,
+        "geonym": "PP7K-RF4R",
+        "checksum": "N"
     },
     "reverse": {
         "attribution": "BAN",
