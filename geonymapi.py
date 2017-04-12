@@ -69,9 +69,15 @@ class GeonymResource(object):
             resp.body = json.dumps(geojson, sort_keys=True, indent=4, separators=(',', ': '))
             resp.set_header('Content-type','application/json')
         else:
+            geojson = {
+                "type": "Feature",
+                "link": "https://github.com/geonym/geonymapi",
+                "params": geonym.getParams()
+            }
             resp.status = falcon.HTTP_400
-            resp.set_header('Content-type','text/html')
-            resp.body = "README dispo sur <a href='https://github.com/geonym/geonymapi'>https://github.com/geonym/geonymapi</a>"
+            resp.set_header('Content-type', 'application/json')
+            resp.body = json.dumps(
+                geojson, sort_keys=True, indent=4, separators=(',', ': '))
 
     def on_get(self, req, resp, query=None):
         self.getGeonym(req, resp, query);
